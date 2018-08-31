@@ -37,7 +37,7 @@ namespace RabbitMQTransfer
             using (var connection = new MqConnectionFactory(log, configuration).Create())
             {
                 log.Debug("Check for input queues");
-                var inputqueues = configuration.GetSection("InputQueues").AsEnumerable().ToArray();
+                var inputqueues = configuration.GetSection("InputQueues").GetChildren().Select(x => x.Value).ToArray();
 
                 if (inputqueues.Length != 0)
                 {
@@ -48,6 +48,7 @@ namespace RabbitMQTransfer
                         log.Error("No output folder found!");
                         return;
                     }
+                    new QueueRetriever(connection, log).DumpQueuesToFile(inputqueues, outputFile);
 
                 }
             }
