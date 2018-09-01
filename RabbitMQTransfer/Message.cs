@@ -78,20 +78,31 @@ namespace RabbitMQTransfer
 
         public void EnrichBasicProperties(IBasicProperties props)
         {
-            props.AppId = AppId;
-            props.ContentEncoding = ContentEncoding;
-            props.ContentType = ContentType;
-            props.CorrelationId = CorrelationId;
+            if(AppId != null)
+                props.AppId = AppId;
+            if (ContentEncoding != null)
+                props.ContentEncoding = ContentEncoding;
+            if (ContentType != null)
+                props.ContentType = ContentType;
+            if (CorrelationId != null)
+                props.CorrelationId = CorrelationId;
             props.DeliveryMode = DeliveryMode;
-            props.Expiration = Expiration;
-            props.Headers = Headers;
-            props.MessageId = MessageId;
+            if (Expiration != null)
+                props.Expiration = Expiration;
+            if (Headers != null)
+                props.Headers = Headers;
+            if (MessageId != null)
+                props.MessageId = MessageId;
             props.Persistent = Persistent;
-            props.Priority = Priority;
-            props.ReplyTo = ReplyTo;
-            props.Timestamp = new AmqpTimestamp(Timestamp);
-            props.Type = Type;
-            props.UserId = UserId;
+            //props.Priority = Priority;
+            if (ReplyTo != null)
+                props.ReplyTo = ReplyTo;
+            if(Timestamp != 0)
+                props.Timestamp = new AmqpTimestamp(Timestamp);
+            if (Type != null)
+                props.Type = Type;
+            if (UserId != null)
+                props.UserId = UserId;
         }
     }
 }

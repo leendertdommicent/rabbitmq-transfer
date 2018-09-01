@@ -45,11 +45,22 @@ namespace RabbitMQTransfer
                     var outputFile = configuration["OutputFile"];
                     if (String.IsNullOrEmpty(outputFile))
                     {
-                        log.Error("No output folder found!");
+                        log.Error("No output file found!");
                         return;
                     }
                     new QueueRetriever(connection, log).DumpQueuesToFile(inputqueues, outputFile);
 
+                }
+                else
+                {
+                    log.Debug("No input queues found, searching for input file");
+                    var inputFile = configuration["InputFile"];
+                    if (String.IsNullOrEmpty(inputFile))
+                    {
+                        log.Error("No input file found!");
+                        return;
+                    }
+                    new QueueSender(connection, log).PushDumpToQueue(inputFile);
                 }
             }
 
